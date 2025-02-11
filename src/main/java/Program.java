@@ -3,39 +3,54 @@ import java.util.Scanner;
 
 public class Program{
     Scanner sc = new Scanner(System.in);
+    UserService userService = new UserService();
     private User currentUser;
     public static void main(String[] args){
-
+        Program program = new Program();
+        while (true){
+            if(program.log())program.taskMenu();
+            else program.log();
+            for(int i = 0; i < 30; ++i)System.out.println();
+        }
     }
 
-    public boolean init(){
-        while (true){
-            System.out.printf("Choose:\n1.Login\n2.Register");
-            String choice = sc.nextLine();
-            UserService userService = new UserService();
+    public boolean log(){
+            System.out.printf("Choose:\n1.Login\n2.Register\n");
+            String name, password, choice = sc.nextLine();
+
+            boolean login = false;
             switch(choice){
                 case "1":
                     System.out.println("Enter username: ");
-                    String name = this.sc.nextLine();
-                    System.out.println("Enter password: ");
-                    String password = this.sc.nextLine();
+                    name = this.sc.nextLine();
+                    System.out.println("Enter password: "); //todo.. посмотреть, как скрыть символы, во время ввода пароля
+                    password = this.sc.nextLine();
                     currentUser =  userService.login(name, password);
+                    System.out.println("Welcome back " + currentUser.getName()+"!");
+                    login = true;
                     break;
                 case "2":
+                    System.out.println("Enter username: ");
+                    name = this.sc.nextLine();
+                    System.out.println("Enter password: "); //todo.. посмотреть, как скрыть символы, во время ввода пароля
+                    password = this.sc.nextLine();
+                    currentUser = userService.CreateUser(name, password);
+                    System.out.println("Welcome "+ currentUser.getName() + "!");
+                    login = true;
                     break;
                 default:
+                    System.out.println("Try again please.");
+                    login = false;
                     break;
             }
-        }
-
-            //todo..Написать
-
+            return login;
     }
     public void taskMenu(){
         ArrayList<Task> tasks = new ArrayList<Task>();
         TaskService taskService = new TaskService();
         String name, description, choice, choice2;
-        while (true) {
+        boolean login = true;
+        while (login) {
             for(Menu menu : Menu.values())System.out.println(menu);
             switch (sc.nextLine()) {
                 case "1":
@@ -95,7 +110,7 @@ public class Program{
                     }
                     break;
                 case "5":
-
+                        login = false;
                     break;
                 default:
                     System.out.print("Попробуйте снова.");
@@ -105,8 +120,8 @@ public class Program{
                 Thread.sleep(1000);
             } catch(InterruptedException ex) {}
             for(int i = 0; i < 30; ++i)System.out.println();
-            System.out.print("\033[H\033[2J");//почему то не работает
-            System.out.flush();
+//            System.out.print("\033[H\033[2J");//почему то не работает
+//            System.out.flush();
         }
     }
 }

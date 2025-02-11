@@ -25,7 +25,7 @@ public class UserService {
             for(User user : users){
                 if(user.getName().equals(username) && user.checkPassword(password)) {
                     this.currentUser = user;
-                    break;
+                    return this.currentUser;
                 }
             }
             return this.currentUser;
@@ -35,7 +35,7 @@ public class UserService {
         }
     }
     public User logout() {
-        this.currentUser = null;
-        return this.currentUser;
+        currentUser = null;
+        return currentUser;
     }
 }

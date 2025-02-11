@@ -15,7 +15,7 @@ public class User{
     }
     public boolean checkPassword(String password){
         //todo.. Нужно проверить как работает equals
-        return this.password.equals(password);
+        return (this.password == password);
     }
     public int getId() {
         return id;
