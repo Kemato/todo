@@ -6,8 +6,8 @@ public class TaskService {
     ArrayList<Task> tasks = new ArrayList();
     public boolean createTask(String name, String description) {
         try {
-            Task task = new Task(id++, name, description);
-            tasks.add(task);
+            Task newTask = new Task(id++, name, description);
+            tasks.add(newTask);
             return true;
         }
         catch (Exception e) {
