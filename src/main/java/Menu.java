@@ -2,5 +2,6 @@ public enum Menu {
     CREATE,
     READE,
     UPDATE,
-    DELETE
+    DELETE,
+    LOG_OUT
 }

@@ -1,6 +1,6 @@
 public class Task {
     private String name, description;
-    private int id;
+    private final int id;
     //Добавить поле со временем и с сроком задачи
     public Task(int id, String name, String description){
         this.id = id;

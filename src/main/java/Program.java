@@ -2,8 +2,36 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Program{
+    Scanner sc = new Scanner(System.in);
+    private User currentUser;
     public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
+
+    }
+
+    public boolean init(){
+        while (true){
+            System.out.printf("Choose:\n1.Login\n2.Register");
+            String choice = sc.nextLine();
+            UserService userService = new UserService();
+            switch(choice){
+                case "1":
+                    System.out.println("Enter username: ");
+                    String name = this.sc.nextLine();
+                    System.out.println("Enter password: ");
+                    String password = this.sc.nextLine();
+                    currentUser =  userService.login(name, password);
+                    break;
+                case "2":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+            //todo..Написать
+
+    }
+    public void taskMenu(){
         ArrayList<Task> tasks = new ArrayList<Task>();
         TaskService taskService = new TaskService();
         String name, description, choice, choice2;
@@ -65,6 +93,9 @@ public class Program{
                         if(taskService.deleteTask(Integer.parseInt(choice)))System.out.println("Успешно удалено.");
                         else System.out.println("Что-то пошло не так.");
                     }
+                    break;
+                case "5":
+
                     break;
                 default:
                     System.out.print("Попробуйте снова.");
