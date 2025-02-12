@@ -4,9 +4,9 @@ import java.util.ArrayList;
 public class TaskService {
     private int id = 0;
     ArrayList<Task> tasks = new ArrayList();
-    public boolean createTask(String name, String description) {
+    public boolean createTask(String name, String description, String author) {
         try {
-            Task newTask = new Task(id++, name, description);
+            Task newTask = new Task(id++, name, description, author);
             tasks.add(newTask);
             return true;
         }

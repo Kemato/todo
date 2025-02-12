@@ -58,7 +58,7 @@ public class Program{
                     name = sc.nextLine();
                     System.out.println("Введите описание: ");
                     description = sc.nextLine();
-                    if(taskService.createTask(name, description)){
+                    if(taskService.createTask(name, description, currentUser.getName())){
                         System.out.println("Новое задание создано!");
                     }
                     else{System.out.println("Что-то пошло не так.");}
@@ -71,6 +71,7 @@ public class Program{
                         for (Task task : tasks) {
                             System.out.println(task.getName());
                             System.out.println(task.getDescription());
+                            System.out.println();
                         }
                     }
                     else{
