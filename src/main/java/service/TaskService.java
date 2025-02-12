@@ -2,14 +2,29 @@ package service;
 
 import model.Task;
 import model.TaskStatus;
+import model.TaskPriority;
 import java.util.ArrayList;
 
 public class TaskService {
     private int id = 0;
     ArrayList<Task> tasks = new ArrayList();
-    public boolean createTask(String name, String description, String author, String assigned) {
+    public boolean createTask(
+            String name,
+            String description,
+            String author,
+            String assigned,
+            String priority
+    ) {
         try {
-            Task newTask = new Task(id++, name, description, author, assigned);
+            Task newTask = new Task(
+                    id++,
+                    name,
+                    description,
+                    author,
+                    assigned,
+                    TaskStatus.CREATED.name(),//todo.. проверить как работает на самом деле
+                    priority
+            );
             tasks.add(newTask);
             return true;
         }
@@ -23,7 +38,11 @@ public class TaskService {
     public Task readTask(int id){
         return this.tasks.get(id);
     }
-    public boolean updateTask(int id, String name, String description){
+    public boolean updateTask(
+            int id,
+            String name,
+            String description
+    ){
         try{
             this.tasks.get(id).setName(name);//может не работать, потому что я получаю переменную, а не меняю её по ссылке
             this.tasks.get(id).setDescription(description);
@@ -58,5 +77,18 @@ public class TaskService {
             return false;
         }
         catch (Exception e){return false;}
+    }
+    public boolean changePriority(int id,String newPriority){
+        try {
+            for(Task task : tasks){
+                if(task.getId() == id){
+                    for(TaskPriority taskPriority : TaskPriority.values()) {
+                        if (taskPriority.toString().equalsIgnoreCase(newPriority)) task.setPriority(taskPriority.toString());
+                    }
+                }
+            }
+        }
+        catch (Exception e){return false;}
+        return false;
     }
 }

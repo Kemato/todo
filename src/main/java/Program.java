@@ -3,6 +3,7 @@ import model.Task;
 import service.TaskService;
 import model.User;
 import service.UserService;
+import model.TaskPriority;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -54,7 +55,7 @@ public class Program{
     public void taskMenu(){
         ArrayList<Task> tasks = new ArrayList<Task>();
         TaskService taskService = new TaskService();
-        String name, description, choice, choice2;
+        String name, description, priority, choice, choice2;
         boolean login = true;
         while (login) {
             for(Menu menu : Menu.values())System.out.println(menu);
@@ -64,7 +65,8 @@ public class Program{
                     name = sc.nextLine();
                     System.out.println("Введите описание: ");
                     description = sc.nextLine();
-                    if(taskService.createTask(name, description, currentUser.getName(), currentUser.getName())){
+                    priority = choicePriority();
+                    if(taskService.createTask(name, description, currentUser.getName(), currentUser.getName(), priority)){
                         System.out.println("Новое задание создано!");
                     }
                     else{System.out.println("Что-то пошло не так.");}
@@ -128,8 +130,45 @@ public class Program{
             } catch(InterruptedException ex) {}
             for(int i = 0; i < 30; ++i)System.out.println();
             System.out.println("\033[H\033[2J");
-//            System.out.print("\033[H\033[2J");//почему то не работает
+//            System.out.print("\033[H\033[2J");//почему-то не работает
 //            System.out.flush();
         }
+    }
+
+    public String choicePriority(){
+        String choice = "";
+        boolean flag = true;
+        while(flag){
+            System.out.println("Назначьте приоритет: ");
+            for(TaskPriority  priority : TaskPriority.values())
+            {System.out.println(capitalizeWords(priority.toString().toLowerCase()));}
+            //todo.. Стоит ли запариться и выводить каждый вариант с большой буквы?
+            choice = sc.nextLine();
+            for(TaskPriority  priority : TaskPriority.values()) {
+                if(priority.toString().equalsIgnoreCase(choice)){
+                    choice = priority.toString();
+                    flag = false;
+                }
+            }
+            System.out.println("Что-то пошло не так. Попробуйте снова.\n");
+        }
+        return choice;
+    }
+
+    public static String capitalizeWords(String input) {
+      if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        StringBuilder result = new StringBuilder();
+        boolean capitalizeNext = true;
+
+        for (char c : input.trim().toCharArray()) {
+            c = capitalizeNext ? Character.toUpperCase(c) : c;
+            capitalizeNext = c == ' ';
+            result.append(c);
+        }
+
+        return result.toString();
     }
 }
