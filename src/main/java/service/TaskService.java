@@ -1,12 +1,15 @@
-import java.io.IOException;
+package service;
+
+import model.Task;
+import model.TaskStatus;
 import java.util.ArrayList;
 
 public class TaskService {
     private int id = 0;
     ArrayList<Task> tasks = new ArrayList();
-    public boolean createTask(String name, String description, String author) {
+    public boolean createTask(String name, String description, String author, String assigned) {
         try {
-            Task newTask = new Task(id++, name, description, author);
+            Task newTask = new Task(id++, name, description, author, assigned);
             tasks.add(newTask);
             return true;
         }
@@ -40,5 +43,20 @@ public class TaskService {
         catch (Exception e) {
             return false;
         }
+    }
+    public boolean changeStatus(int id,String newStatus){
+        //todo.. проверка на доступ к смене статуса
+        try{
+            for(Task task : tasks){
+                if(task.getId() == id){
+                    for(TaskStatus status:TaskStatus.values()){
+                        if(status.toString().equalsIgnoreCase(newStatus))task.setStatus(status.toString());
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        catch (Exception e){return false;}
     }
 }

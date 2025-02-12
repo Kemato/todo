@@ -1,3 +1,9 @@
+import model.Menu;
+import model.Task;
+import service.TaskService;
+import model.User;
+import service.UserService;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -58,7 +64,7 @@ public class Program{
                     name = sc.nextLine();
                     System.out.println("Введите описание: ");
                     description = sc.nextLine();
-                    if(taskService.createTask(name, description, currentUser.getName())){
+                    if(taskService.createTask(name, description, currentUser.getName(), currentUser.getName())){
                         System.out.println("Новое задание создано!");
                     }
                     else{System.out.println("Что-то пошло не так.");}
@@ -121,6 +127,7 @@ public class Program{
                 Thread.sleep(1000);
             } catch(InterruptedException ex) {}
             for(int i = 0; i < 30; ++i)System.out.println();
+            System.out.println("\033[H\033[2J");
 //            System.out.print("\033[H\033[2J");//почему то не работает
 //            System.out.flush();
         }
