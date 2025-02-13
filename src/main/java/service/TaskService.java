@@ -3,11 +3,13 @@ package service;
 import model.Task;
 import model.TaskStatus;
 import model.TaskPriority;
+
 import java.util.ArrayList;
 
 public class TaskService {
     private int id = 0;
     ArrayList<Task> tasks = new ArrayList();
+
     public boolean createTask(
             String name,
             String description,
@@ -27,68 +29,110 @@ public class TaskService {
             );
             tasks.add(newTask);
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
-    public ArrayList<Task> readTask(){
+
+    public ArrayList<Task> readTask() {
         return tasks;
     }
-    public Task readTask(int id){
+
+    public Task readTask(int id) {
         return this.tasks.get(id);
     }
+
     public boolean updateTask(
             int id,
             String name,
-            String description
-    ){
-        try{
-            this.tasks.get(id).setName(name);//может не работать, потому что я получаю переменную, а не меняю её по ссылке
+            String description,
+            String assigned,
+            String status,
+            String priority
+    ) {
+        try {
+            this.tasks.get(id).setName(name);
             this.tasks.get(id).setDescription(description);
+            this.tasks.get(id).setAssigned(assigned);
+            this.tasks.get(id).setStatus(status);
+            this.tasks.get(id).setPriority(priority);
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
 
     }
-    public boolean deleteTask(int id){
+
+    public boolean deleteTask(int id) {
 
         try {
             this.tasks.remove(id);
             return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean changeTaskName(int id, String newName) {
+        try {
+            this.tasks.get(id).setName(newName);
+            return true;
         }
         catch (Exception e) {
             return false;
         }
     }
-    public boolean changeStatus(int id,String newStatus){
-        //todo.. проверка на доступ к смене статуса
+
+    public boolean changeTaskDescription(int id, String newDescription) {
+        try {
+            this.tasks.get(id).setDescription(newDescription);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean changeTaskAssigned(int id, String newAssigned) {
         try{
-            for(Task task : tasks){
-                if(task.getId() == id){
-                    for(TaskStatus status:TaskStatus.values()){
-                        if(status.toString().equalsIgnoreCase(newStatus))task.setStatus(status.toString());
+            this.tasks.get(id).setAssigned(newAssigned);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean changeTaskStatus(int id, String newStatus) {
+        //todo.. проверка на доступ к смене статуса
+        try {
+            for (Task task : tasks) {
+                if (task.getId() == id) {
+                    for (TaskStatus status : TaskStatus.values()) {
+                        if (status.toString().equalsIgnoreCase(newStatus)) task.setStatus(status.toString());
                         return true;
                     }
                 }
             }
             return false;
+        } catch (Exception e) {
+            return false;
         }
-        catch (Exception e){return false;}
     }
-    public boolean changePriority(int id,String newPriority){
+
+    public boolean changeTaskPriority(int id, String newPriority) {
         try {
-            for(Task task : tasks){
-                if(task.getId() == id){
-                    for(TaskPriority taskPriority : TaskPriority.values()) {
-                        if (taskPriority.toString().equalsIgnoreCase(newPriority)) task.setPriority(taskPriority.toString());
+            for (Task task : tasks) {
+                if (task.getId() == id) {
+                    for (TaskPriority taskPriority : TaskPriority.values()) {
+                        if (taskPriority.toString().equalsIgnoreCase(newPriority))
+                            task.setPriority(taskPriority.toString());
                     }
                 }
             }
+        } catch (Exception e) {
+            return false;
         }
-        catch (Exception e){return false;}
         return false;
     }
 }
