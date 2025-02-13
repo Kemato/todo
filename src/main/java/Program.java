@@ -1,9 +1,6 @@
-import model.Menu;
-import model.Task;
+import model.*;
 import service.TaskService;
-import model.User;
 import service.UserService;
-import model.TaskPriority;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,12 +8,13 @@ import java.util.Scanner;
 public class Program {
     Scanner sc = new Scanner(System.in);
     UserService userService = new UserService();
+    TaskService taskService = new TaskService();
     private User currentUser;
 
     public static void main(String[] args) {
         Program program = new Program();
         while (true) {
-            if (program.log()) program.taskMenu();
+            if (program.log()) program.mainMenu();
             else program.log();
             for (int i = 0; i < 30; ++i) System.out.println();
         }
@@ -56,9 +54,9 @@ public class Program {
         return login;
     }
 
-    public void taskMenu() {
+    public void mainMenu() {
         ArrayList<Task> tasks = new ArrayList<Task>();
-        TaskService taskService = new TaskService();
+
         String name, description, priority, choice, choice2;
         boolean login = true;
         while (login) {
@@ -70,14 +68,7 @@ public class Program {
                     System.out.println("Введите описание: ");
                     description = sc.nextLine();
                     priority = choicePriority();
-                    if (taskService.createTask(
-                            name,
-                            description,
-                            currentUser.getName(),
-                            currentUser.getName(),
-                            priority
-                    )
-                    ) {
+                    if (taskService.createTask(name, description, currentUser.getName(), currentUser.getName(), priority)) {
                         System.out.println("Новое задание создано!");
                     } else {
                         System.out.println("Что-то пошло не так.");
@@ -100,34 +91,21 @@ public class Program {
                     break;
                 case "3":
                     System.out.println("Введите порядкой номер задания, которое вы хотите исправить");
-                    choice = sc.nextLine();//обработать штуку, чтобы пользователь выбирал только существующий
-                    System.out.println("Введите новое название (если не хотите менять введите '-')");
-                    name = sc.nextLine();
-                    System.out.println("Введите новое описание (если не хотите менять введите '-')");
-                    description = sc.nextLine();
-                    if (name.equals("-")) {
-                        if (taskService.updateTask(
-                                Integer.parseInt(choice),
-                                taskService.readTask(Integer.parseInt(choice)).getName(),
-                                description
-                        )
-                        ) System.out.println("Изменения применены.");
-                        else System.out.println("Что-то пошло не так");
-                        break;
+                    tasks = taskService.readTask();
+                    for (Task task : tasks) {
+                        System.out.println(task.getName());
+                        System.out.println(task.getDescription());
+                        System.out.println("id: " + (task.getId() + 1));
+                        System.out.println();
                     }
-                    if (description.equals("-")) {
-                        if (taskService.updateTask(
-                                Integer.parseInt(choice),
-                                name,
-                                taskService.readTask(Integer.parseInt(choice)).getDescription()
-                        )
-                        ) System.out.println("Изменения применены.");
-                        else System.out.println("Что-то пошло не так");
-                        break;
+                    while (true) {
+                        choice = sc.nextLine();
+                        if (Integer.parseInt(choice) <= tasks.size() && Integer.parseInt(choice) > 0) {
+                            break;
+                        }
+                        System.out.println("Выберете существующее задание.");
                     }
-                    if (taskService.updateTask(Integer.parseInt(choice), name, description))
-                        System.out.println("Изменения применены.");
-                    else System.out.println("Что-то пошло не так");
+                    taskUpdateMenu(Integer.parseInt(choice) - 1);
                     break;
                 case "4":
                     System.out.println("Введите порядковый номер записи, которую вы хотите удалить.");
@@ -178,6 +156,92 @@ public class Program {
             if (flag) System.out.println("Что-то пошло не так. Попробуйте снова.\n");
         }
         return choice;
+    }
+
+    public void taskUpdateMenu(int id) {
+        boolean flag = true;
+        String choice;
+        while (flag) {
+            System.out.println("Выберете поле, которое вы хотите обновить:");
+            for (MenuUpdateTask point : MenuUpdateTask.values()) {
+                System.out.println(capitalizeWords(point.toString().toLowerCase()));
+            }
+            choice = sc.nextLine();
+            for (MenuUpdateTask point : MenuUpdateTask.values()) {
+                if (point.toString().equalsIgnoreCase(choice)) {
+                    flag = false;
+                    switch (point) {
+                        case NAME:
+                            System.out.println("Введите новое имя:");
+                            String newName = sc.nextLine();
+                            if (taskService.changeTaskName(id, newName)) System.out.println("Изменения применены.");
+                            else System.out.println("Что-то пошло не так. ");
+                            return;
+
+                        case DESCRIPTION:
+                            System.out.println("Введите новое описание:");
+                            String newDescription = sc.nextLine();
+                            taskService.changeTaskDescription(id, newDescription);
+                            return;
+
+                        case ASSIGNED:
+                            System.out.println("Кому назначить:");
+                            //todo.. Нужно вывести текущих пользователей, и проверить соответствие введённого варианта
+                            String newAssigned = sc.nextLine();
+                            taskService.changeTaskName(id, newAssigned);
+                            return;
+
+                        case STATUS:
+                            String newStatus = "";
+                            boolean flagStatus = true;
+                            while (flagStatus) {
+                                for (TaskStatus status : TaskStatus.values()) {
+                                    System.out.println(capitalizeWords(status.toString().toLowerCase()));
+                                }
+                                System.out.println("Введите новый статус:");
+                                newStatus = sc.nextLine();
+                                for (TaskStatus status : TaskStatus.values()) {
+                                    if (status.toString().equalsIgnoreCase(newStatus)) {
+                                        newStatus = status.toString();
+                                        flagStatus = false;
+                                        break;
+                                    }
+                                }
+                                System.out.println("Некорректный статус.");
+                            }
+                            taskService.changeTaskStatus(id, newStatus);
+                            return;
+
+                        case PRIORITY:
+                            String newPriority = "";
+                            boolean flagPriority = true;
+                            while (flagPriority) {
+                                for (TaskPriority priority : TaskPriority.values()) {
+                                    System.out.println(capitalizeWords(priority.toString().toLowerCase()));
+                                }
+                                System.out.println("Введите приоритет:");
+                                newPriority = sc.nextLine();
+                                for (TaskPriority priority : TaskPriority.values()) {
+                                    if (priority.toString().equalsIgnoreCase(newPriority)) {
+                                        newPriority = priority.toString();
+                                        flagPriority = false;
+                                        break;
+                                    }
+                                }
+                                System.out.println("Некорректный статус.");
+                            }
+                            taskService.changeTaskPriority(id, newPriority);
+                            return;
+                        default:
+                            System.out.println("Некорректный ввод.");
+                            return;
+
+
+                    }
+                }
+            }
+            if (flag) System.out.println("Некорректный ввод.");
+        }
     }
 
     public static String capitalizeWords(String input) {

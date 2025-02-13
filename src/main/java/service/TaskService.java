@@ -74,6 +74,7 @@ public class TaskService {
     }
 
     public boolean changeTaskName(int id, String newName) {
+        System.out.println("Я сюда зашел");
         try {
             this.tasks.get(id).setName(newName);
             return true;
