@@ -2,7 +2,7 @@ package model;
 
 public enum Menu {
     CREATE,
-    READE,
+    READ,
     UPDATE,
     DELETE,
     LOG_OUT

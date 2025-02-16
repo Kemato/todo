@@ -26,4 +26,9 @@ public class User{
     public int getId() {
         return id;
     }
+
+    public int getHash() {
+        return password.hashCode();
+        //todo.. Посмотреть как работает эта функция
+    }
 }

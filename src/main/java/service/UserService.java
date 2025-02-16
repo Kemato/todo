@@ -48,7 +48,10 @@ public class UserService {
         return currentUser;
     }
 
-    public ArrayList<String> getUsers() {
+    public ArrayList<String> getUserNames() {
         return userNames;
+    }
+    public ArrayList<User> getUsers() {
+        return users;
     }
 }

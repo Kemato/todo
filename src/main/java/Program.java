@@ -1,4 +1,5 @@
 import model.*;
+import parse.JsonParse;
 import service.TaskService;
 import service.UserService;
 
@@ -57,74 +58,84 @@ public class Program {
     public void mainMenu() {
         ArrayList<Task> tasks = new ArrayList<Task>();
 
-        String name, description, priority, choice, choice2;
-        boolean login = true;
+        String name, description, priority, choice, choice2, assegned;
+        boolean login = true, correct = false;
         while (login) {
             for (Menu menu : Menu.values()) System.out.println(menu);
-            switch (sc.nextLine()) {
-                case "1":
-                    System.out.println("Введите называние: ");
-                    name = sc.nextLine();
-                    System.out.println("Введите описание: ");
-                    description = sc.nextLine();
-                    priority = choicePriority();
-                    if (taskService.createTask(name, description, currentUser.getName(), currentUser.getName(), priority)) {
-                        System.out.println("Новое задание создано!");
-                    } else {
-                        System.out.println("Что-то пошло не так.");
-                    }
-                    break;
-                case "2":
-                    System.out.println("Введите id задания, если хотите вывести весь список, введите '-'.");
-                    choice = sc.nextLine();
-                    if (choice.equals("-")) {
-                        tasks = taskService.readTask();
-                        for (Task task : tasks) {
-                            System.out.println(task.getName());
-                            System.out.println(task.getDescription());
-                            System.out.println();
-                        }
-                    } else {
-                        System.out.println(taskService.readTask(Integer.parseInt(choice)));
-                        System.out.println();
-                    }
-                    break;
-                case "3":
-                    System.out.println("Введите порядкой номер задания, которое вы хотите исправить");
-                    tasks = taskService.readTask();
-                    for (Task task : tasks) {
-                        System.out.println(task.getName());
-                        System.out.println(task.getDescription());
-                        System.out.println("id: " + (task.getId() + 1));
-                        System.out.println();
-                    }
-                    while (true) {
-                        choice = sc.nextLine();
-                        if (Integer.parseInt(choice) <= tasks.size() && Integer.parseInt(choice) > 0) {
+            choice = sc.nextLine();
+            for (Menu menu : Menu.values()) {
+                if (menu.toString().equalsIgnoreCase(choice)) {
+                    switch (menu) {
+                        case CREATE:
+                            System.out.println("Введите называние: ");
+                            name = sc.nextLine();
+                            System.out.println("Введите описание: ");
+                            description = sc.nextLine();
+                            assegned = choiceAssegned();
+                            priority = choicePriority();
+                            if (taskService.createTask(name, description, currentUser.getName(), assegned, priority)) {
+                                System.out.println("Новое задание создано!");
+                            } else {
+                                System.out.println("Что-то пошло не так.");
+                            }
                             break;
-                        }
-                        System.out.println("Выберете существующее задание.");
+                        case READ:
+                            System.out.println("Введите id(1-"+tasks.size()+")задания, если хотите вывести весь список, введите '-'.");
+                            choice = sc.nextLine();
+                            if (choice.equals("-")) {
+                                tasks = taskService.readTask();
+                                for (Task task : tasks) {
+                                    printTask(task);
+                                }
+                            } else {
+                                printTask(taskService.readTask(Integer.parseInt(choice)));
+
+                            }
+                            System.out.println("Введите любой символ чтобы продолжить...");
+                            sc.nextLine();
+                            break;
+                        case UPDATE:
+                            System.out.println("Введите порядковый номер задания, которое вы хотите исправить");
+                            tasks = taskService.readTask();
+                            for (Task task : tasks) {
+                                System.out.println(task.getName());
+                                System.out.println(task.getDescription());
+                                System.out.println("id: " + (task.getId() + 1));
+                                System.out.println();
+                            }
+                            while (true) {
+                                choice = sc.nextLine();
+                                if (Integer.parseInt(choice) <= tasks.size() && Integer.parseInt(choice) > 0) {
+                                    break;
+                                }
+                                System.out.println("Выберете существующее задание.");
+                            }
+                            taskUpdateMenu(Integer.parseInt(choice) - 1);
+                            break;
+                        case DELETE:
+                            System.out.println("Введите порядковый номер записи, которую вы хотите удалить.");
+                            choice = sc.nextLine();
+                            System.out.println("Вы уверены что хотите удалить эту запись?(Yes/No)");
+                            System.out.println(taskService.readTask(Integer.parseInt(choice)).getName());
+                            choice2 = sc.nextLine().toLowerCase();
+                            if (choice2.equals("yes")) {
+                                if (taskService.deleteTask(Integer.parseInt(choice)))
+                                    System.out.println("Успешно удалено.");
+                                else System.out.println("Что-то пошло не так.");
+                            }
+                            break;
+                        case LOG_OUT:
+                            JsonParse parse = new JsonParse();
+                            parse.write(userService.getUsers());
+                            login = false;
+                            break;
+                        default:
+                            System.out.print("Попробуйте снова.");
+                            break;
                     }
-                    taskUpdateMenu(Integer.parseInt(choice) - 1);
-                    break;
-                case "4":
-                    System.out.println("Введите порядковый номер записи, которую вы хотите удалить.");
-                    choice = sc.nextLine();
-                    System.out.println("Вы уверены что хотите удалить эту запись?(Yes/No)");
-                    System.out.println(taskService.readTask(Integer.parseInt(choice)).getName());
-                    choice2 = sc.nextLine().toLowerCase();
-                    if (choice2.equals("yes")) {
-                        if (taskService.deleteTask(Integer.parseInt(choice))) System.out.println("Успешно удалено.");
-                        else System.out.println("Что-то пошло не так.");
-                    }
-                    break;
-                case "5":
-                    login = false;
-                    break;
-                default:
-                    System.out.print("Попробуйте снова.");
-                    break;
+                }
             }
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -134,6 +145,23 @@ public class Program {
 //            System.out.print("\033[H\033[2J");//почему-то не работает
 //            System.out.flush();
         }
+    }
+
+    public String choiceAssegned() {
+        boolean flag = true;
+        String assegned = "";
+        while (flag) {
+            System.out.println("Выберите пользователя кому назначить задание:");
+            for (String user : userService.getUserNames()) {
+                System.out.println(user);
+            }
+            assegned = sc.nextLine();
+            if (userService.getUserNames().contains(assegned)) {
+                flag = false;
+            } else System.out.println("Некорректный ввод.");
+
+        }
+        return assegned;
     }
 
     public String choicePriority() {
@@ -242,6 +270,16 @@ public class Program {
             }
             if (flag) System.out.println("Некорректный ввод.");
         }
+    }
+
+    public void printTask(Task task) {
+        System.out.println("Name: " + task.getName());
+        System.out.println("Description: " + task.getDescription());
+        System.out.println("Author: " + task.getAuthor());
+        System.out.println("Assigned: " + task.getAssigned());
+        System.out.println("Status: " + task.getStatus());
+        System.out.println("Priority: " + task.getPriority());
+        System.out.println();
     }
 
     public static String capitalizeWords(String input) {
