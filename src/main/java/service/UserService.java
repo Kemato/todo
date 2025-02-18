@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class UserService {
     private int id = 0;
-    public ArrayList<User> users = new ArrayList();
-    public ArrayList<String> userNames = new ArrayList();
+    public ArrayList<User> users = new ArrayList<>();
+    public ArrayList<String> userNames = new ArrayList<>();
     private User currentUser = null;
 
     public User CreateUser(String username, String password) {
@@ -29,8 +29,6 @@ public class UserService {
 
     public User login(String username, String password) {
         try {
-            //Я уверен что можно сделать это красивее, но пока что тупой перебор
-            //Понять как достоверно работает equals
             for (User user : users) {
                 if (user.getName().equals(username) && user.checkPassword(password)) {
                     this.currentUser = user;
@@ -44,10 +42,11 @@ public class UserService {
     }
 
     public User logout() {
-        currentUser = null;
-        return currentUser;
+        return currentUser = null;
     }
-
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
     public ArrayList<String> getUserNames() {
         return userNames;
     }

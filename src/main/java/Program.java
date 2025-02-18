@@ -1,5 +1,6 @@
+import service.hash.Hash;
 import model.*;
-import parse.JsonParse;
+import service.parse.JsonUserParse;
 import service.TaskService;
 import service.UserService;
 
@@ -11,7 +12,7 @@ public class Program {
     UserService userService = new UserService();
     TaskService taskService = new TaskService();
     private User currentUser;
-
+    JsonUserParse parser = new JsonUserParse();
     public static void main(String[] args) {
         Program program = new Program();
         while (true) {
@@ -20,11 +21,11 @@ public class Program {
             for (int i = 0; i < 30; ++i) System.out.println();
         }
     }
-
     public boolean log() {
-        System.out.printf("Choose:\n1.Login\n2.Register\n");
+        userService.setUsers(parser.read());
+        System.out.format("Choose:\n1.Login\n2.Register\n");
         String name, password, choice = sc.nextLine();
-
+        Hash hash = new Hash();
         boolean login = false;
         switch (choice) {
             case "1":
@@ -32,7 +33,7 @@ public class Program {
                 name = this.sc.nextLine();
                 System.out.println("Enter password: ");
                 //todo.. посмотреть, как скрыть символы, во время ввода пароля
-                password = this.sc.nextLine();
+                password = hash.sha256hex(this.sc.nextLine());
                 currentUser = userService.login(name, password);
                 System.out.println("Welcome back " + currentUser.getName() + "!");
                 login = true;
@@ -42,7 +43,7 @@ public class Program {
                 name = this.sc.nextLine();
                 System.out.println("Enter password: ");
                 //todo.. посмотреть, как скрыть символы, во время ввода пароля
-                password = this.sc.nextLine();
+                password = hash.sha256hex(this.sc.nextLine());
                 currentUser = userService.CreateUser(name, password);
                 System.out.println("Welcome " + currentUser.getName() + "!");
                 login = true;
@@ -55,8 +56,10 @@ public class Program {
         return login;
     }
 
+
+
     public void mainMenu() {
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<Task> tasks = new ArrayList<>();
 
         String name, description, priority, choice, choice2, assegned;
         boolean login = true, correct = false;
@@ -125,7 +128,7 @@ public class Program {
                             }
                             break;
                         case LOG_OUT:
-                            JsonParse parse = new JsonParse();
+                            JsonUserParse parse = new JsonUserParse();
                             parse.write(userService.getUsers());
                             login = false;
                             break;
@@ -136,14 +139,8 @@ public class Program {
                 }
             }
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-            }
-            for (int i = 0; i < 30; ++i) System.out.println();
-            System.out.println("\033[H\033[2J");
-//            System.out.print("\033[H\033[2J");//почему-то не работает
-//            System.out.flush();
+
+            for (int i = 0; i < 6; ++i) System.out.println();
         }
     }
 
