@@ -5,6 +5,7 @@ import model.TaskStatus;
 import model.TaskPriority;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskService {
     private int id = 0;
@@ -15,7 +16,8 @@ public class TaskService {
             String description,
             String author,
             String assigned,
-            String priority
+            String priority,
+            Date Deadline
     ) {
         try {
             Task newTask = new Task(
