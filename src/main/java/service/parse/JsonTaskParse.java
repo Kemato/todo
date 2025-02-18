@@ -1,4 +1,5 @@
 package service.parse;
+import interfaces.TaskParse;
 import model.Task;
 import model.User;
 import org.json.simple.JSONArray;
@@ -9,7 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-public class JsonTaskParse {
+public class JsonTaskParse implements TaskParse {
     public ArrayList<Task> read(){
         ArrayList<Task> tasks = new ArrayList<>();
         JSONParser parser = new JSONParser();

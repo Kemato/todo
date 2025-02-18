@@ -1,5 +1,6 @@
 package service.parse;
 
+import interfaces.UserParse;
 import model.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,7 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-public class JsonUserParse {
+public class JsonUserParse implements UserParse {
     public ArrayList<User> read(){
         ArrayList<User> usersArray = new ArrayList<>();
         JSONParser parser = new JSONParser();
