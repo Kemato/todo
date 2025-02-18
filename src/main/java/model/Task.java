@@ -28,8 +28,8 @@ public class Task {
     public String getName(){return name;}
     public String getDescription(){return description;}
     public String getAuthor() {return author;}
-    public String getStatus() {return status;}
     public String getAssigned() {return assigned;}
+    public String getStatus() {return status;}
     public String getPriority() {return priority;}
 
 
