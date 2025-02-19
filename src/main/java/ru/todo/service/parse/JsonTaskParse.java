@@ -38,7 +38,7 @@ public class JsonTaskParse implements TaskParse {
             jsonTask.put("priority", task.getPriority());
             jsonTaskArray.add(jsonTask);
         }
-        try(FileWriter writer = new FileWriter("src/main/resources/users.json")){
+        try(FileWriter writer = new FileWriter("src/main/resources/tasks.json")){
             writer.write(jsonTaskArray.toJSONString());
             writer.flush();
         }

@@ -37,7 +37,7 @@ public class JsonUserParse implements UserParse {
         JSONArray usersList = new JSONArray();
         for(User user: users){
             JSONObject userDetails = new JSONObject();
-            userDetails.put("password", user.getHash()+"");
+            userDetails.put("password", user.getPassword());
             userDetails.put("name", user.getName());
             userDetails.put("id", user.getId().intValue());
             usersList.add(userDetails);

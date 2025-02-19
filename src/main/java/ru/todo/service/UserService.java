@@ -6,7 +6,7 @@ import ru.todo.model.User;
 import java.util.ArrayList;
 
 public class UserService {
-    private int id = 0;
+    private Long id = 0L;
     public ArrayList<User> users = new ArrayList<>();
     public ArrayList<String> userNames = new ArrayList<>();
     private User currentUser = null;
@@ -44,7 +44,12 @@ public class UserService {
     public User logout() {
         return currentUser = null;
     }
-    public void setUsers(ArrayList<User> users) {this.users = users;}
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+        if(!users.isEmpty()) {
+            this.id = users.getLast().getId() + 1;
+        }
+    }
 
     public ArrayList<String> getUserNames() {return userNames;}
     public ArrayList<User> getUsers() {return users;}
