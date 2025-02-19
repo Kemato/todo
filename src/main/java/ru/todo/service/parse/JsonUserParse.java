@@ -1,7 +1,7 @@
-package service.parse;
+package ru.todo.service.parse;
 
-import interfaces.UserParse;
-import model.User;
+import ru.todo.interfaces.UserParse;
+import ru.todo.model.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,9 +18,8 @@ public class JsonUserParse implements UserParse {
             JSONArray usersArrayJSON = (JSONArray) parser.parse(reader);
             for(Object it: usersArrayJSON){
                 JSONObject userObj = (JSONObject) it;
-                System.out.println(userObj.get("id"));
-                Integer id = (Integer) userObj.get("id");
-                String username = (String) userObj.get("username");
+                Long id = (Long) userObj.get("id");
+                String username = (String) userObj.get("name");
                 String password = (String) userObj.get("password");
                 User user = new User(id, username, password);
                 usersArray.add(user);
@@ -40,7 +39,7 @@ public class JsonUserParse implements UserParse {
             JSONObject userDetails = new JSONObject();
             userDetails.put("password", user.getHash()+"");
             userDetails.put("name", user.getName());
-            userDetails.put("id", user.getId());
+            userDetails.put("id", user.getId().intValue());
             usersList.add(userDetails);
         }
         try(FileWriter writer = new FileWriter("src/main/resources/users.json")){

@@ -1,6 +1,6 @@
-package interfaces;
+package ru.todo.interfaces;
 
-import model.User;
+import ru.todo.model.User;
 
 import java.util.ArrayList;
 

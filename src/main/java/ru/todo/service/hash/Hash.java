@@ -1,4 +1,4 @@
-package service.hash;
+package ru.todo.service.hash;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class Hash{

@@ -1,7 +1,7 @@
-package service.parse;
+package ru.todo.service.parse;
 
-import interfaces.UserParse;
-import model.User;
+import ru.todo.interfaces.UserParse;
+import ru.todo.model.User;
 
 import java.util.ArrayList;
 

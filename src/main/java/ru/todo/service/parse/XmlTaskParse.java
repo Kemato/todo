@@ -1,4 +1,4 @@
-package service.parse;
+package ru.todo.service.parse;
 
 public class XmlTaskParse {
 }

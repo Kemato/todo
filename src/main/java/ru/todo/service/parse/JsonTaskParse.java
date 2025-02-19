@@ -1,7 +1,6 @@
-package service.parse;
-import interfaces.TaskParse;
-import model.Task;
-import model.User;
+package ru.todo.service.parse;
+import ru.todo.interfaces.TaskParse;
+import ru.todo.model.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

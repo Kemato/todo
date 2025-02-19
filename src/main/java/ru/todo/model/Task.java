@@ -1,4 +1,4 @@
-package model;
+package ru.todo.model;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;

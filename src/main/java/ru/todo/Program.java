@@ -1,8 +1,10 @@
-import service.hash.Hash;
-import model.*;
-import service.parse.JsonUserParse;
-import service.TaskService;
-import service.UserService;
+package ru.todo;
+
+import ru.todo.model.*;
+import ru.todo.service.hash.Hash;
+import ru.todo.service.parse.JsonUserParse;
+import ru.todo.service.TaskService;
+import ru.todo.service.UserService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +49,7 @@ public class Program {
                 System.out.println("Enter password: ");
                 //todo.. посмотреть, как скрыть символы, во время ввода пароля
                 password = hash.sha256hex(this.sc.nextLine());
-                currentUser = userService.CreateUser(name, password);
+                currentUser = userService.createUser(name, password);
                 System.out.println("Welcome " + currentUser.getName() + "!");
                 login = true;
                 break;
@@ -178,12 +180,12 @@ public class Program {
         boolean flag = true;
         while (flag) {
             System.out.println("Назначьте приоритет: ");
-            for (TaskPriority priority : TaskPriority.values()) {
+            for (taskPriority priority : taskPriority.values()) {
                 System.out.println(capitalizeWords(priority.toString().toLowerCase()));
             }
             //todo.. Стоит ли запариться и выводить каждый вариант с большой буквы?
             choice = sc.nextLine();
-            for (TaskPriority priority : TaskPriority.values()) {
+            for (taskPriority priority : taskPriority.values()) {
                 if (priority.toString().equalsIgnoreCase(choice)) {
                     choice = priority.toString();
                     flag = false;
@@ -253,12 +255,12 @@ public class Program {
                             String newPriority = "";
                             boolean flagPriority = true;
                             while (flagPriority) {
-                                for (TaskPriority priority : TaskPriority.values()) {
+                                for (taskPriority priority : taskPriority.values()) {
                                     System.out.println(capitalizeWords(priority.toString().toLowerCase()));
                                 }
                                 System.out.println("Введите приоритет:");
                                 newPriority = sc.nextLine();
-                                for (TaskPriority priority : TaskPriority.values()) {
+                                for (taskPriority priority : taskPriority.values()) {
                                     if (priority.toString().equalsIgnoreCase(newPriority)) {
                                         newPriority = priority.toString();
                                         flagPriority = false;

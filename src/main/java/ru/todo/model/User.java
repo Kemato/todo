@@ -1,13 +1,13 @@
-package model;
+package ru.todo.model;
 
 public class User{
 
-    private final int id;
+    private final Long id;
     private String name;
     protected String password;
 
     public User(
-            int id,
+            Long id,
             String name,
             String password
     ){
@@ -23,7 +23,7 @@ public class User{
         this.name = name;
     }
     public boolean checkPassword(String password){return (this.password.equals(password));}
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

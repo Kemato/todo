@@ -1,10 +1,9 @@
-package service;
+package ru.todo.service;
 
-import model.Task;
-import model.TaskStatus;
-import model.TaskPriority;
+import ru.todo.model.Task;
+import ru.todo.model.TaskStatus;
+import ru.todo.model.taskPriority;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -105,7 +104,7 @@ public class TaskService {
 
     public boolean changeTaskPriority(int id, String newPriority) {
         try {
-            for (TaskPriority taskPriority : TaskPriority.values()) {
+            for (ru.todo.model.taskPriority taskPriority : taskPriority.values()) {
                 if (taskPriority.toString().equalsIgnoreCase(newPriority)) {
                     tasks.get(id).setPriority(taskPriority.toString());
                     tasks.get(id).setDateUpdated(new Date());
@@ -114,6 +113,28 @@ public class TaskService {
             }
             return false;
         } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean changeTaskDeadline(int id, Date newDeadline) {
+        try{
+            this.tasks.get(id).setDeadline(newDeadline);
+            this.tasks.get(id).setDateUpdated(new Date());
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean taskFinished(){
+        try{
+            this.tasks.get(id).setDateUpdated(new Date());
+            this.tasks.get(id).setDateFinished(new Date());
+            return true;
+        }
+        catch (Exception e) {
             return false;
         }
     }
