@@ -4,8 +4,11 @@ import service.parse.JsonUserParse;
 import service.TaskService;
 import service.UserService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Date;
 
 public class Program {
     Scanner sc = new Scanner(System.in);
@@ -60,7 +63,7 @@ public class Program {
 
     public void mainMenu() {
         ArrayList<Task> tasks = new ArrayList<>();
-
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         String name, description, priority, choice, choice2, assegned;
         boolean login = true, correct = false;
         while (login) {
@@ -76,7 +79,16 @@ public class Program {
                             description = sc.nextLine();
                             assegned = choiceAssegned();
                             priority = choicePriority();
-                            if (taskService.createTask(name, description, currentUser.getName(), assegned, priority)) {
+                            System.out.println("Введите дедлайн в формате 'dd/MM/yyyy': ");
+                            Date deadlineDate = null;
+                            try {
+                                deadlineDate = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+
+                            } catch (ParseException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            if (taskService.createTask(name, description, currentUser.getName(), assegned, priority, deadlineDate)) {
                                 System.out.println("Новое задание создано!");
                             } else {
                                 System.out.println("Что-то пошло не так.");

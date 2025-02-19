@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Task {
     private String name, description, status, assigned, priority;
