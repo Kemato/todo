@@ -1,19 +1,19 @@
-package service;
+package ru.todo.service;
 
-import exeption.UserExeption;
-import model.User;
+import ru.todo.exeption.UserExeption;
+import ru.todo.model.User;
 
 import java.util.ArrayList;
 
 public class UserService {
     private int id = 0;
-    public ArrayList<User> users = new ArrayList();
-    public ArrayList<String> userNames = new ArrayList();
+    public ArrayList<User> users = new ArrayList<>();
+    public ArrayList<String> userNames = new ArrayList<>();
     private User currentUser = null;
 
-    public User CreateUser(String username, String password) {
+    public User createUser(String username, String password) {
         try {
-            User newUser = new User(id++, username, password);
+            User newUser = new User((long) id++, username, password);
             users.add(newUser);
             userNames.add(username);
             currentUser = newUser;
@@ -29,8 +29,6 @@ public class UserService {
 
     public User login(String username, String password) {
         try {
-            //Я уверен что можно сделать это красивее, но пока что тупой перебор
-            //Понять как достоверно работает equals
             for (User user : users) {
                 if (user.getName().equals(username) && user.checkPassword(password)) {
                     this.currentUser = user;
@@ -44,11 +42,10 @@ public class UserService {
     }
 
     public User logout() {
-        currentUser = null;
-        return currentUser;
+        return currentUser = null;
     }
+    public void setUsers(ArrayList<User> users) {this.users = users;}
 
-    public ArrayList<String> getUsers() {
-        return userNames;
-    }
+    public ArrayList<String> getUserNames() {return userNames;}
+    public ArrayList<User> getUsers() {return users;}
 }

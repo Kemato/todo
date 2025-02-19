@@ -1,10 +1,11 @@
-package service;
+package ru.todo.service;
 
-import model.Task;
-import model.TaskStatus;
-import model.TaskPriority;
+import ru.todo.model.Task;
+import ru.todo.model.TaskStatus;
+import ru.todo.model.taskPriority;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TaskService {
     private int id = 0;
@@ -15,7 +16,8 @@ public class TaskService {
             String description,
             String author,
             String assigned,
-            String priority
+            String priority,
+            Date deadline
     ) {
         try {
             Task newTask = new Task(
@@ -25,7 +27,8 @@ public class TaskService {
                     author,
                     assigned,
                     TaskStatus.CREATED.name(),//todo.. проверить как работает на самом деле
-                    priority
+                    priority,
+                    deadline
             );
             tasks.add(newTask);
             return true;
@@ -42,27 +45,6 @@ public class TaskService {
         return this.tasks.get(id);
     }
 
-    public boolean updateTask(
-            int id,
-            String name,
-            String description,
-            String assigned,
-            String status,
-            String priority
-    ) {
-        try {
-            this.tasks.get(id).setName(name);
-            this.tasks.get(id).setDescription(description);
-            this.tasks.get(id).setAssigned(assigned);
-            this.tasks.get(id).setStatus(status);
-            this.tasks.get(id).setPriority(priority);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-
-    }
-
     public boolean deleteTask(int id) {
 
         try {
@@ -77,9 +59,9 @@ public class TaskService {
         System.out.println("Я сюда зашел");
         try {
             this.tasks.get(id).setName(newName);
+            this.tasks.get(id).setDateUpdated(new Date());
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -87,19 +69,19 @@ public class TaskService {
     public boolean changeTaskDescription(int id, String newDescription) {
         try {
             this.tasks.get(id).setDescription(newDescription);
+            this.tasks.get(id).setDateUpdated(new Date());
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
     public boolean changeTaskAssigned(int id, String newAssigned) {
-        try{
+        try {
             this.tasks.get(id).setAssigned(newAssigned);
+            this.tasks.get(id).setDateUpdated(new Date());
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -107,12 +89,11 @@ public class TaskService {
     public boolean changeTaskStatus(int id, String newStatus) {
         //todo.. проверка на доступ к смене статуса
         try {
-            for (Task task : tasks) {
-                if (task.getId() == id) {
-                    for (TaskStatus status : TaskStatus.values()) {
-                        if (status.toString().equalsIgnoreCase(newStatus)) task.setStatus(status.toString());
-                        return true;
-                    }
+            for (TaskStatus status : TaskStatus.values()) {
+                if (status.toString().equalsIgnoreCase(newStatus)) {
+                    tasks.get(id).setStatus(status.toString());
+                    tasks.get(id).setDateUpdated(new Date());
+                    return true;
                 }
             }
             return false;
@@ -123,17 +104,38 @@ public class TaskService {
 
     public boolean changeTaskPriority(int id, String newPriority) {
         try {
-            for (Task task : tasks) {
-                if (task.getId() == id) {
-                    for (TaskPriority taskPriority : TaskPriority.values()) {
-                        if (taskPriority.toString().equalsIgnoreCase(newPriority))
-                            task.setPriority(taskPriority.toString());
-                    }
+            for (ru.todo.model.taskPriority taskPriority : taskPriority.values()) {
+                if (taskPriority.toString().equalsIgnoreCase(newPriority)) {
+                    tasks.get(id).setPriority(taskPriority.toString());
+                    tasks.get(id).setDateUpdated(new Date());
+                    return true;
                 }
             }
+            return false;
         } catch (Exception e) {
             return false;
         }
-        return false;
+    }
+
+    public boolean changeTaskDeadline(int id, Date newDeadline) {
+        try{
+            this.tasks.get(id).setDeadline(newDeadline);
+            this.tasks.get(id).setDateUpdated(new Date());
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean taskFinished(){
+        try{
+            this.tasks.get(id).setDateUpdated(new Date());
+            this.tasks.get(id).setDateFinished(new Date());
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 }

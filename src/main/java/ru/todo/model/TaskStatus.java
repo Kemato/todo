@@ -1,4 +1,4 @@
-package model;
+package ru.todo.model;
 
 public enum TaskStatus {
     /*
