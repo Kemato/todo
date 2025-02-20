@@ -23,22 +23,16 @@ public class UserService {
         }
     }
 
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
     public User login(String username, String password) {
         try {
             for (User user : users) {
-                if (user.getName().equals(username) && user.checkPassword(password)) {
-                    this.currentUser = user;
-                    return this.currentUser;
-                }
+                if (user.getName().equals(username) && user.checkPassword(password))return currentUser= user;
             }
-            return this.currentUser;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new UserExeption("Login failed");
         }
+        return currentUser = null;
     }
 
     public User logout() {

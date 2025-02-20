@@ -3,7 +3,8 @@ package ru.todo.service.menu;
 import ru.todo.model.Menu;
 import ru.todo.model.Task;
 import ru.todo.model.User;
-import ru.todo.service.Choise;
+import static ru.todo.service.Choise.choicePriority;
+import static ru.todo.service.Choise.choiceAssegned;
 import ru.todo.service.TaskService;
 import ru.todo.service.UserService;
 import ru.todo.service.parse.JsonTaskParse;
@@ -17,15 +18,12 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class MainMenu {
-    Scanner sc = new Scanner(System.in);
-    public void mainMenu(TaskService taskService, UserService userService, User currentUser) {
-        JsonUserParse jsonUserParser = new JsonUserParse();
-        JsonTaskParse jsonTaskParser = new JsonTaskParse();
+    public static void mainMenu(TaskService taskService, UserService userService, User currentUser) {
+        Scanner sc = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Choise choi = new Choise();
         //todo.. надо что нибудь придумать с этим убогим неймингом
-        String name, description, priority, choice, choice2, assegned;
+        String name, description, priority, choice, assegned;
         boolean login = true;
         while (login) {
             for (Menu menu : Menu.values()) System.out.println(menu);
@@ -38,8 +36,8 @@ public class MainMenu {
                             name = sc.nextLine();
                             System.out.println("Введите описание: ");
                             description = sc.nextLine();
-                            assegned = choi.choiceAssegned();
-                            priority = choi.choicePriority();
+                            assegned = choiceAssegned(userService);
+                            priority = choicePriority();
                             System.out.println("Введите дедлайн в формате 'dd/MM/yyyy': ");
                             Date deadlineDate = null;
                             try {
@@ -95,28 +93,24 @@ public class MainMenu {
                             System.out.println(taskService.readTask(id).getName());
 
                             if (sc.nextLine().equalsIgnoreCase("yes")) {
-                                if (taskService.deleteTask(id))
-                                    System.out.println("Успешно удалено.");
-                                else System.out.println("Удаление отменено.");
+                                taskService.deleteTask(id);
+                                System.out.println("Успешно удалено.");
                             }
+                            else System.out.println("Удаление отменено.");
                             break;
                         case LOG_OUT:
-                            jsonUserParser.write(userService.getUsers());
-                            jsonTaskParser.write(taskService.getTasks());
                             login = false;
                             break;
                         default:
-                            System.out.print("Попробуйте снова.");
+                            System.out.print("???");
                             break;
                     }
                 }
             }
-
-
             for (int i = 0; i < 6; ++i) System.out.println();
         }
     }
-    public void printTask(Task task) {
+    public static void printTask(Task task) {
         System.out.println("Name: " + task.getName());
         System.out.println("Description: " + task.getDescription());
         System.out.println("Author: " + task.getAuthor());

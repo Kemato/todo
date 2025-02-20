@@ -5,8 +5,8 @@ import ru.todo.model.TaskPriority;
 import java.util.Scanner;
 import static ru.todo.service.CapitalizeWords.capitalizeWords;
 public class Choise {
-    Scanner sc = new Scanner(System.in);
-    public String choicePriority(UserService userService) {
+    public static String choicePriority() {
+        Scanner sc = new Scanner(System.in);
         String choice = "";
         boolean flag = true;
         while (flag) {
@@ -27,7 +27,8 @@ public class Choise {
         }
         return choice;
     }
-    public String choiceAssegned(UserService userService) {
+    public static String choiceAssegned(UserService userService) {
+        Scanner sc = new Scanner(System.in);
         boolean flag = true;
         String assegned = "";
         while (flag) {
