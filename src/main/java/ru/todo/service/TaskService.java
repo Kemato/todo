@@ -2,7 +2,7 @@ package ru.todo.service;
 
 import ru.todo.model.Task;
 import ru.todo.model.TaskStatus;
-import ru.todo.model.taskPriority;
+import ru.todo.model.TaskPriority;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +36,11 @@ public class TaskService {
             return false;
         }
     }
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+        if(!tasks.isEmpty())this.id = tasks.getLast().getId() + 1;
+    }
+    public ArrayList<Task> getTasks() {return tasks;}
 
     public ArrayList<Task> readTask() {
         return tasks;
@@ -56,7 +61,6 @@ public class TaskService {
     }
 
     public boolean changeTaskName(int id, String newName) {
-        System.out.println("Я сюда зашел");
         try {
             this.tasks.get(id).setName(newName);
             this.tasks.get(id).setDateUpdated(new Date());
@@ -104,7 +108,7 @@ public class TaskService {
 
     public boolean changeTaskPriority(int id, String newPriority) {
         try {
-            for (ru.todo.model.taskPriority taskPriority : taskPriority.values()) {
+            for (TaskPriority taskPriority : TaskPriority.values()) {
                 if (taskPriority.toString().equalsIgnoreCase(newPriority)) {
                     tasks.get(id).setPriority(taskPriority.toString());
                     tasks.get(id).setDateUpdated(new Date());

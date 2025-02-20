@@ -1,6 +1,6 @@
 package ru.todo.model;
 
-public enum taskPriority {
+public enum TaskPriority {
     HIGHEST,
     HIGHT,
     MEDIUM,

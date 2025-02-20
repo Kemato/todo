@@ -16,19 +16,15 @@ public class User{
         this.password = password;
     }
 
-    public String getName(){
-        return name;
-    }
     public void setName(String name){
         this.name = name;
     }
-    public boolean checkPassword(String password){return (this.password.equals(password));}
+    public String getName(){
+        return name;
+    }
     public Long getId() {
         return id;
     }
-
-    public int getHash() {
-        return password.hashCode();
-        //todo.. Посмотреть как работает эта функция
-    }
+    public String getPassword() {return password;}
+    public boolean checkPassword(String password){return (this.password.equals(password));}
 }
