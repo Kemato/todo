@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class TaskService {
-    private int id = 0;
+    //todo поле int работает не так, как я предполагаю. Может быть путаница в индексах.
+    private Long id = 0L;
     ArrayList<Task> tasks = new ArrayList();
 
     public boolean createTask(
@@ -28,7 +29,10 @@ public class TaskService {
                     assigned,
                     TaskStatus.CREATED.name(),//todo.. проверить как работает на самом деле
                     priority,
-                    deadline
+                    new Date(),
+                    deadline,
+                    new Date(),
+                    null
             );
             tasks.add(newTask);
             return true;
@@ -132,7 +136,7 @@ public class TaskService {
         }
     }
 
-    public boolean taskFinished(){
+    public boolean taskFinished(int id){
         try{
             this.tasks.get(id).setDateUpdated(new Date());
             this.tasks.get(id).setDateFinished(new Date());

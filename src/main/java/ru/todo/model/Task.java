@@ -8,17 +8,20 @@ public class Task {
     private Date deadline, dateFinished, dateUpdated;
     private final Date dateCreated;
     private final String author;
-    private final int id;
+    private final Long id;
     //Добавить поле со временем и со сроком задачи
     public Task(
-            int id,
+            Long id,
             String name,
             String description,
             String author,
             String assigned,
             String status,
             String priority,
-            Date deadline
+            Date dateCreated,
+            Date deadline,
+            Date dateUpdated,
+            Date dateFinished
     ) {
         this.id = id;
         this.name = name;
@@ -27,14 +30,14 @@ public class Task {
         this.assigned = assigned;
         this.status = status;
         this.priority = priority;
-        this.dateCreated = new Date();
+        this.dateCreated = dateCreated;
         this.deadline = deadline;
-        this.dateUpdated = new Date();
-        this.dateFinished = null;
+        this.dateUpdated = dateUpdated;
+        this.dateFinished = dateFinished;
     }
 
 
-    public int getId(){return id;}
+    public Long getId(){return id;}
     public String getName(){return name;}
     public String getDescription(){return description;}
     public String getAuthor() {return author;}

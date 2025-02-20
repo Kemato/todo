@@ -1,6 +1,7 @@
 package ru.todo.service;
 
 import ru.todo.model.TaskPriority;
+import ru.todo.model.User;
 
 import java.util.Scanner;
 import static ru.todo.service.CapitalizeWords.capitalizeWords;
@@ -33,13 +34,16 @@ public class Choise {
         String assegned = "";
         while (flag) {
             System.out.println("Выберите пользователя кому назначить задание:");
-            for (String user : userService.getUserNames()) {
-                System.out.println(user);
+            for (User user : userService.getUsers()) {
+                System.out.println(user.getName());
             }
             assegned = sc.nextLine();
-            if (userService.getUserNames().contains(assegned)) {
-                flag = false;
-            } else System.out.println("Некорректный ввод.");
+            for (User user : userService.getUsers()) {
+                if(user.getName().equals(assegned)) {
+                    return assegned;
+                }
+            }
+            System.out.println("Некорректный ввод.");
 
         }
         return assegned;

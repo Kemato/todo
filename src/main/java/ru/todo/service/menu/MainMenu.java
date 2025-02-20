@@ -3,12 +3,15 @@ package ru.todo.service.menu;
 import ru.todo.model.Menu;
 import ru.todo.model.Task;
 import ru.todo.model.User;
+
 import static ru.todo.service.Choise.choicePriority;
 import static ru.todo.service.Choise.choiceAssegned;
+
 import ru.todo.service.TaskService;
 import ru.todo.service.UserService;
 import ru.todo.service.parse.JsonTaskParse;
 import ru.todo.service.parse.JsonUserParse;
+
 import static ru.todo.service.menu.TaskUpdateMenu.taskUpdateMenu;
 
 import java.text.ParseException;
@@ -32,30 +35,43 @@ public class MainMenu {
                 if (menu.toString().equalsIgnoreCase(choice)) {
                     switch (menu) {
                         case CREATE:
-                            System.out.println("Введите называние: ");
+                            System.out.println("Введите название: ");
                             name = sc.nextLine();
                             System.out.println("Введите описание: ");
                             description = sc.nextLine();
                             assegned = choiceAssegned(userService);
                             priority = choicePriority();
-                            System.out.println("Введите дедлайн в формате 'dd/MM/yyyy': ");
                             Date deadlineDate = null;
-                            try {
-                                deadlineDate = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
-
-                            } catch (ParseException e) {
-                                throw new RuntimeException(e);
+                            while (true) {
+                                System.out.println("Введите дедлайн в формате 'dd/MM/yyyy': ");
+                                try {
+                                    deadlineDate = new SimpleDateFormat("dd/MM/yyyy").parse(sc.nextLine());
+                                    if (deadlineDate.after(new Date())) break;
+                                    else System.out.println("He won't have time");
+                                } catch (ParseException e) {
+                                    System.out.println("Uncorrected date format.");
+                                }
                             }
 
-                            if (taskService.createTask(name, description, currentUser.getName(), assegned, priority, deadlineDate)) {
+                            if (taskService.createTask(
+                                    name,
+                                    description,
+                                    currentUser.getName(),
+                                    assegned,
+                                    priority,
+                                    deadlineDate))
                                 System.out.println("Новое задание создано!");
-                            } else {
+                            else
                                 System.out.println("Что-то пошло не так.");
-                            }
                             break;
+
                         case READ:
+                            if(tasks.isEmpty()){
+                                System.out.println("There are no tasks.");
+                                break;
+                            }
+                            System.out.println("Введите id(1-" + tasks.size() + ")задания, если хотите вывести весь список, введите '-'.");
                             String input = sc.nextLine();
-                            System.out.println("Введите id(1-"+tasks.size()+")задания, если хотите вывести весь список, введите '-'.");
                             if (input.equals("-")) {
                                 tasks = taskService.readTask();
                                 for (Task task : tasks) {
@@ -95,8 +111,7 @@ public class MainMenu {
                             if (sc.nextLine().equalsIgnoreCase("yes")) {
                                 taskService.deleteTask(id);
                                 System.out.println("Успешно удалено.");
-                            }
-                            else System.out.println("Удаление отменено.");
+                            } else System.out.println("Удаление отменено.");
                             break;
                         case LOG_OUT:
                             login = false;
@@ -110,6 +125,7 @@ public class MainMenu {
             for (int i = 0; i < 6; ++i) System.out.println();
         }
     }
+
     public static void printTask(Task task) {
         System.out.println("Name: " + task.getName());
         System.out.println("Description: " + task.getDescription());
