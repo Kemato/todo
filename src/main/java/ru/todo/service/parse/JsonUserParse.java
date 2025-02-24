@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
-public class JsonUserParse implements UserParse {
+public class JsonUserParse {
     public ArrayList<User> read(){
         ArrayList<User> usersArray = new ArrayList<>();
         JSONParser parser = new JSONParser();

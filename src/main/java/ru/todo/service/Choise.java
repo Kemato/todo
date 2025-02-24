@@ -34,11 +34,11 @@ public class Choise {
         String assegned = "";
         while (flag) {
             System.out.println("Выберите пользователя кому назначить задание:");
-            for (User user : userService.getUsers()) {
+            for (User user : userService.getUserList()) {
                 System.out.println(user.getName());
             }
             assegned = sc.nextLine();
-            for (User user : userService.getUsers()) {
+            for (User user : userService.getUserList()) {
                 if(user.getName().equals(assegned)) {
                     return assegned;
                 }

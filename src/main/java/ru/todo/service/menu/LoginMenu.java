@@ -36,7 +36,7 @@ public class LoginMenu {
                     while(name == null) {
                         System.out.println("Enter username: ");
                         name = sc.nextLine();
-                        for(User user : userService.getUsers()) {
+                        for(User user : userService.getUserList()) {
                             if(user.getName().equals(name)) {
                                 System.out.println("This name is already in use!");
                                 name = null;

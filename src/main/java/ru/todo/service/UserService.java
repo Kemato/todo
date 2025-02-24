@@ -1,19 +1,27 @@
 package ru.todo.service;
 
+
 import ru.todo.exeption.UserExeption;
 import ru.todo.model.User;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 
+@XmlRootElement(namespace = "ru.todo.service")
 public class UserService {
+
+    @XmlElementWrapper(name = "userList")
+    @XmlElement(name = "user")
+    private ArrayList<User> userList = new ArrayList<>();
     private Long id = 0L;
-    public ArrayList<User> users = new ArrayList<>();
     private User currentUser = null;
 
     public User createUser(String username, String password) {
         try {
             User newUser = new User((long) id++, username, password);
-            users.add(newUser);
+            userList.add(newUser);
             currentUser = newUser;
             return currentUser;
         } catch (Exception e) {
@@ -23,7 +31,7 @@ public class UserService {
 
     public User login(String username, String password) {
         try {
-            for (User user : users) {
+            for (User user : userList) {
                 if (user.getName().equals(username) && user.checkPassword(password))
                     return currentUser= user;
             }
@@ -37,12 +45,13 @@ public class UserService {
     public User logout() {
         return currentUser = null;
     }
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
-        if(!users.isEmpty()) {
-            this.id = users.getLast().getId() + 1;
+    public void setUserList(ArrayList<User> userList) {
+        this.userList = userList;
+        if(!userList.isEmpty()) {
+            this.id = userList.getLast().getId() + 1;
         }
     }
 
-    public ArrayList<User> getUsers() {return users;}
+    public ArrayList<User> getUserList() {return userList;}
 }
+
