@@ -1,12 +1,12 @@
 package ru.todo.service.parse;
 
-import ru.todo.interfaces.UserParse;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import ru.todo.model.User;
 import ru.todo.service.UserService;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

@@ -1,9 +1,9 @@
 package ru.todo.model;
 
-public enum Menu {
+public enum UserMenuEnum {
     CREATE,
     READ,
     UPDATE,
     DELETE,
-    LOG_OUT
+    BACK
 }

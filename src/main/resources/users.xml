@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:userService xmlns:ns2="ru.todo.service">
+    <users>
+        <user>
+            <id>0</id>
+            <title>Kem</title>
+            <password>54d5cb2d332dbdb4850293caae4559ce88b65163f1ea5d4e4b3ac49d772ded14</password>
+        </user>
+        <user>
+            <id>1</id>
+            <title>asdf</title>
+            <password>41a7ed1ba26217cf70059964c74665d0a9c364a4078f69a3ca6d1e2623b0679f</password>
+        </user>
+        <user>
+            <id>2</id>
+            <title>Kemato</title>
+            <password>338d611b1b4b69a0e2e68fa76782431245288610e226fb6dddc397661f205e8d</password>
+        </user>
+        <user>
+            <id>3</id>
+            <title>kem</title>
+            <password>5f4f6d29b726812655684985422f9e4b3c1b195d30e2f266aab7c4db3c9244e5</password>
+        </user>
+    </users>
+    <id>4</id>
+</ns2:userService>

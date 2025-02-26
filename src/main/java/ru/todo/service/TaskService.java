@@ -4,6 +4,7 @@ import ru.todo.model.Task;
 import ru.todo.model.TaskStatus;
 import ru.todo.model.TaskPriority;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,6 +12,15 @@ public class TaskService {
     //todo поле int работает не так, как я предполагаю. Может быть путаница в индексах.
     private Long id = 0L;
     ArrayList<Task> tasks = new ArrayList();
+    private TaskService() {}
+
+    private static class SingletonHolder {
+        private static final TaskService INSTANCE = new TaskService();
+    }
+
+    public static TaskService getInstance() {
+        return TaskService.SingletonHolder.INSTANCE;
+    }
 
     public boolean createTask(
             String name,
