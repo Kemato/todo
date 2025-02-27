@@ -17,15 +17,11 @@ import java.util.ArrayList;
 public class XmlUserParse {
     private static final String USERLIST_XML = "src/main/resources/users.xml";
 
-    public ArrayList<User> read() throws JAXBException, FileNotFoundException {
+    public void read() throws JAXBException, FileNotFoundException {
+        UserService userService = UserService.getInstance();
         var context = JAXBContext.newInstance(UserService.class);
         var um = context.createUnmarshaller();
-
-        var userList = (UserService) um.unmarshal(new InputStreamReader(
-                new FileInputStream(USERLIST_XML), StandardCharsets.UTF_8));
-        return userList.getUserList();
-
-
+        userService.setUserList(((UserService) um.unmarshal(new InputStreamReader(new FileInputStream(USERLIST_XML), StandardCharsets.UTF_8))).getUserList());
     }
 
     public void write(UserService userService) throws JAXBException {

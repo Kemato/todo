@@ -1,7 +1,8 @@
 package ru.todo.service.menu;
 
 import ru.todo.model.MainMenuEnum;
-import ru.todo.model.User;
+import ru.todo.service.UserService;
+
 import static ru.todo.service.menu.UserMenu.userMenu;
 import static ru.todo.service.menu.TaskMenu.taskMenu;
 
@@ -9,8 +10,9 @@ import static ru.todo.service.menu.TaskMenu.taskMenu;
 import java.util.Scanner;
 
 public class MainMenu {
-    public static void mainMenu(User currentUser) {
+    public static void mainMenu() {
         Scanner sc = new Scanner(System.in);
+        UserService userService = UserService.getInstance();
         String choice;
         while (true) {
             System.out.println("Main menu.");
@@ -22,10 +24,10 @@ public class MainMenu {
                 if (mainMenu.toString().equalsIgnoreCase(choice)) {
                     switch (mainMenu) {
                         case USER_MENU:
-                            userMenu(currentUser);
+                            userMenu(userService.readUser());
                             break;
                         case TASK_MENU:
-                            taskMenu(currentUser);
+                            taskMenu(userService.readUser());
                         case LOG_OUT:
                             return;
                     }

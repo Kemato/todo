@@ -8,11 +8,12 @@ import ru.todo.service.parse.JsonUserParse;
 import static ru.todo.service.hash.Hash.sha256hex;
 
 import java.util.Scanner;
+import static ru.todo.service.menu.MainMenu.mainMenu;
 
 public class LoginMenu {
-    public static User loginMenu(UserService userService) {
+    public static void loginMenu() {
         Scanner sc = new Scanner(System.in);
-        User currentUser = null;
+        UserService userService = UserService.getInstance();
         boolean loggedIn = false;
         while(!loggedIn) {
             System.out.format("Choose:\n1.Login\n2.Register\n");
@@ -24,11 +25,11 @@ public class LoginMenu {
                     System.out.println("Enter password: ");
                     //todo.. посмотреть, как скрыть символы, во время ввода пароля
                     password = sha256hex(sc.nextLine());
-                    currentUser = userService.login(name, password);
-                    if(currentUser != null) {
-                        System.out.println("Welcome back " + currentUser.getName() + "!");
+                    userService.login(name, password);
+                    if(userService.readUser() != null) {
+                        System.out.println("Welcome back " + userService.readUser().getName() + "!");
                         loggedIn = true;
-                        return currentUser;
+                        mainMenu();
                     }
                     System.out.println("Login failed!");
                     break;
@@ -47,9 +48,9 @@ public class LoginMenu {
                     System.out.println("Enter password: ");
                     //todo.. посмотреть, как скрыть символы, во время ввода пароля
                     password = sha256hex(sc.nextLine());
-                    currentUser = userService.createUser(name, password);
+                    userService.createUser(name, password);
                     //todo.. Добавить функционал, чтобы имена пользователей не повторялись
-                    System.out.println("Welcome " + currentUser.getName() + "!");
+                    System.out.println("Welcome " + userService.readUser().getName() + "!");
                     loggedIn = true;
                     break;
                 default:
@@ -58,6 +59,5 @@ public class LoginMenu {
                     break;
             }
         }
-        return currentUser;
     }
 }

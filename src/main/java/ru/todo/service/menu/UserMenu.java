@@ -14,7 +14,6 @@ public class UserMenu {
         UserService userService = UserService.getInstance();
         String choice, newName = currentuser.getName(), newPassword = currentuser.getPassword();
         Scanner scanner = new Scanner(System.in);
-        boolean f = true;
         while (true) {
             System.out.println("User menu:");
             for (UserMenuEnum menu : UserMenuEnum.values()) {
@@ -26,8 +25,8 @@ public class UserMenu {
                     switch (menu) {
                         case READ:
                             //Зачем?
-                            User user = userService.readUser(currentuser.getId());
-                            System.out.println("Current user " + user.getName());
+
+                            System.out.println("Current user " + userService.readUser().getName());
 
                         case UPDATE:
                             System.out.println("Update name/password?");
@@ -58,7 +57,7 @@ public class UserMenu {
                         case DELETE:
                             System.out.println("Are you sure you want to delete the user?(Yes/No):");
                             userService.deleteUser(currentuser.getId());
-                            break;
+                            return;
 
                         case BACK:
                             return;

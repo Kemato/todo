@@ -23,4 +23,9 @@
         </user>
     </users>
     <id>4</id>
+    <currentUser>
+        <id>2</id>
+        <title>Kemato</title>
+        <password>338d611b1b4b69a0e2e68fa76782431245288610e226fb6dddc397661f205e8d</password>
+    </currentUser>
 </ns2:userService>

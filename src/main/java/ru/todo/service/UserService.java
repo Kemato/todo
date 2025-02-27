@@ -30,30 +30,25 @@ public class UserService {
         return SingletonHolder.INSTANCE;
     }
 
-    public User createUser(String username, String password) {
+    public void createUser(String username, String password) {
         for (User user : userList) {
             if (user.getName().equals(username)) {
                 System.out.println("User already exists");
-                return null;
+                return;
             }
         }
         try {
             User newUser = new User((long) id++, username, password);
             this.userList.add(newUser);
             currentUser = newUser;
-            return currentUser;
+            System.out.println("Created successfully!jj");
         } catch (Exception e) {
             throw new UserExeption("User creation failed");
         }
     }
 
-    public User readUser(long id) {
-        for (User user : userList) {
-            if (user.getId() == id) {
-                return user;
-            }
-        }
-        return null;
+    public User readUser() {
+        return currentUser;
     }
 
     public void updateUser(long id, String username, String password) {
@@ -76,15 +71,14 @@ public class UserService {
                     return currentUser = user;
             }
         } catch (Exception e) {
-            throw new UserExeption("Login failed");
-        } finally {
             System.out.println("Username or password doesn't match");
+            throw new UserExeption("Login failed");
         }
         return currentUser = null;
     }
 
-    public User logOut() {
-        return currentUser = null;
+    public void logOut() {
+        currentUser = null;
     }
 
     public void setUserList(ArrayList<User> users) {
