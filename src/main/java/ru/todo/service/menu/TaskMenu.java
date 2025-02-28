@@ -64,14 +64,14 @@ public class TaskMenu {
                             break;
 
                         case READ:
-                            if(tasks.isEmpty()){
+                            if (taskService.getTasks().isEmpty()) {
                                 System.out.println("There are no tasks.");
                                 break;
                             }
                             System.out.println(
                                     "Введите id(1-" +
                                             tasks.size() +
-                                    ")задания, если хотите вывести весь список, введите '-'."
+                                            ")задания, если хотите вывести весь список, введите '-'."
                             );
                             String input = sc.nextLine();
                             if (input.equals("-")) {
@@ -87,6 +87,10 @@ public class TaskMenu {
                             sc.nextLine();
                             break;
                         case UPDATE:
+                            if (tasks.isEmpty()) {
+                                System.out.println("There are no tasks.");
+                                break;
+                            }
                             System.out.println("Введите порядковый номер задания, которое вы хотите исправить");
                             tasks = taskService.readTask();
                             for (Task task : tasks) {
@@ -104,7 +108,12 @@ public class TaskMenu {
                             }
                             taskUpdateMenu(Integer.parseInt(choice) - 1, taskService);
                             break;
+
                         case DELETE:
+                            if (taskService.getTasks().isEmpty()) {
+                                System.out.println("There are no tasks.");
+                                break;
+                            }
                             System.out.println("Введите порядковый номер записи, которую вы хотите удалить.");
                             int id = Integer.parseInt(sc.nextLine());
                             System.out.println("Вы уверены что хотите удалить эту запись?(Yes/No)");
@@ -115,9 +124,10 @@ public class TaskMenu {
                                 System.out.println("Успешно удалено.");
                             } else System.out.println("Удаление отменено.");
                             break;
+
                         case BACK:
-                            login = false;
-                            break;
+                            return;
+
                         default:
                             System.out.print("???");
                             break;

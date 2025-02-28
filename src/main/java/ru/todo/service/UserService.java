@@ -84,7 +84,10 @@ public class UserService {
     public void setUserList(ArrayList<User> users) {
         this.userList = users;
         if (!this.userList.isEmpty()) {
-            this.id = this.userList.getLast().getId() + 1;
+            this.id = this.userList.stream()
+                    .mapToLong(User::getId)
+                    .max()
+                    .orElse(0L) + 1;
         }
     }
 

@@ -1,5 +1,6 @@
 package ru.todo.service;
 
+import jakarta.xml.bind.annotation.*;
 import ru.todo.model.Task;
 import ru.todo.model.TaskStatus;
 import ru.todo.model.TaskPriority;
@@ -7,10 +8,13 @@ import ru.todo.model.TaskPriority;
 
 import java.util.ArrayList;
 import java.util.Date;
-
+@XmlRootElement(namespace = "ru.todo.service")
+@XmlAccessorType(XmlAccessType.FIELD) // Указываем, что сериализуются только поля с аннотациями
 public class TaskService {
     //todo поле int работает не так, как я предполагаю. Может быть путаница в индексах.
     private Long id = 0L;
+    @XmlElementWrapper(name = "tasks")
+    @XmlElement(name = "task")
     ArrayList<Task> tasks = new ArrayList();
     private TaskService() {}
 

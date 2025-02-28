@@ -28,6 +28,7 @@ public class MainMenu {
                             break;
                         case TASK_MENU:
                             taskMenu(userService.readUser());
+                            break;
                         case LOG_OUT:
                             return;
                     }
