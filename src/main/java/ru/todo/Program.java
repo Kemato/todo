@@ -25,14 +25,15 @@ public class Program {
         JsonTaskParse jsonTaskParser = new JsonTaskParse();
 
         while (true) {
-            taskService.setTasks(jsonTaskParser.read());
+//            jsonTaskParser.read();
 //            userService.setUserList(jsonUserParser.read());
-//            xmlTaskParse.read();
+            xmlTaskParse.read();
+            jsonTaskParser.write();
             xmlUserParse.read();
             loginMenu();
             for (int i = 0; i < 30; ++i) System.out.println();
             xmlUserParse.write();
-            jsonTaskParser.write(taskService.getTasks());
+            jsonTaskParser.write();
             xmlTaskParse.write();
             jsonUserParser.write(userService.getUserList());
         }

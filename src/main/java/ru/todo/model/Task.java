@@ -20,12 +20,11 @@ import java.util.Date;
         "dateUpdated",
         "dateFinished"})
 public class Task {
-    private String name, description, status, assigned, priority;
-    private Date deadLine, dateFinished, dateUpdated;
-    private final Date dateCreated;
-    private final String author;
-    private final Long id;
+    private Long id;
+    private String name, description, author, status, assigned, priority;
+    private Date dateCreated, deadLine, dateFinished, dateUpdated;
 
+    public Task() {}
     //Добавить поле со временем и со сроком задачи
     public Task(
             Long id,
@@ -89,21 +88,24 @@ public class Task {
         return dateFinished;
     }
 
+    public void setId(Long id) {this.id = id;}
     public void setName(String name) {
         this.name = name;
-    }
-    public void setStatus(String status) {
-        this.status = status;
     }
     public void setDescription(String description) {
         this.description = description;
     }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public void setAuthor(String author) {this.author = author;}
     public void setAssigned(String assigned) {
         this.assigned = assigned;
     }
     public void setPriority(String priority) {
         this.priority = priority;
     }
+    public void setDateCreated(Date dateCreated) {}
     public void setDeadline(Date deadline) {
         this.deadLine = deadline;
     }
