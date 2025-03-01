@@ -21,8 +21,13 @@
             <title>kem</title>
             <password>5f4f6d29b726812655684985422f9e4b3c1b195d30e2f266aab7c4db3c9244e5</password>
         </user>
+        <user>
+            <id>4</id>
+            <title>kmato</title>
+            <password>f0e4c2f76c58916ec258f246851bea091d14d4247a2fc3e18694461b1816e13b</password>
+        </user>
     </users>
-    <id>4</id>
+    <id>5</id>
     <currentUser>
         <id>2</id>
         <title>Kemato</title>

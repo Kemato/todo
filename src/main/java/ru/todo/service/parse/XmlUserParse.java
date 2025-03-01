@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 
 public class XmlUserParse {
-    private static final String USERLIST_XML = "src/main/resources/users.xml";
+    private static final String USERLIST_XML = "data/users.xml";
 
     public void read() throws JAXBException, FileNotFoundException {
         UserService userService = UserService.getInstance();

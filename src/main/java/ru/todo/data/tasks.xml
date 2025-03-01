@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns2:taskService xmlns:ns2="ru.todo.service">
-    <id>1</id>
+    <id>2</id>
     <tasks>
         <task>
             <id>0</id>
@@ -10,9 +10,20 @@
             <assigned>Kem</assigned>
             <status>CREATED</status>
             <priority>LOWER</priority>
-            <dateCreated>2025-02-28T14:08:38.695+03:00</dateCreated>
             <deadline>2026-01-01T00:00:00+03:00</deadline>
             <dateUpdated>2025-02-28T14:08:38.695+03:00</dateUpdated>
+        </task>
+        <task>
+            <id>1</id>
+            <title>Tasasd</title>
+            <description>asdf</description>
+            <author>Kemato</author>
+            <assigned>Kemato</assigned>
+            <status>CREATED</status>
+            <priority>LOWER</priority>
+            <dateCreated>2025-03-01T14:57:16.746+03:00</dateCreated>
+            <deadline>2028-01-01T00:00:00+03:00</deadline>
+            <dateUpdated>2025-03-01T14:57:16.746+03:00</dateUpdated>
         </task>
     </tasks>
 </ns2:taskService>

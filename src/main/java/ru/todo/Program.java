@@ -25,8 +25,8 @@ public class Program {
         JsonTaskParse jsonTaskParser = new JsonTaskParse();
 
         while (true) {
-//            jsonTaskParser.read();
-//            userService.setUserList(jsonUserParser.read());
+            jsonTaskParser.read();
+            userService.setUserList(jsonUserParser.read());
             xmlTaskParse.read();
             jsonTaskParser.write();
             xmlUserParse.read();
