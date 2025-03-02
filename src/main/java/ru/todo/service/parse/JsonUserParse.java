@@ -14,7 +14,7 @@ public class JsonUserParse {
     public ArrayList<User> read(){
         ArrayList<User> usersArray = new ArrayList<>();
         JSONParser parser = new JSONParser();
-        try(FileReader reader = new FileReader("data/users.json");){
+        try(FileReader reader = new FileReader("src/main/java/data/users.json");){
             JSONArray usersArrayJSON = (JSONArray) parser.parse(reader);
             for(Object it: usersArrayJSON){
                 JSONObject userObj = (JSONObject) it;
@@ -42,7 +42,7 @@ public class JsonUserParse {
             userDetails.put("id", user.getId().intValue());
             usersList.add(userDetails);
         }
-        try(FileWriter writer = new FileWriter("data/users.json")){
+        try(FileWriter writer = new FileWriter("src/main/java/data/users.json")){
             writer.write(usersList.toJSONString());
             writer.flush();
         }

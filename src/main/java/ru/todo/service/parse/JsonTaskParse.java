@@ -11,7 +11,7 @@ import java.io.FileWriter;
 
 public class JsonTaskParse {
     public void read(){
-       try(InputStream inputStream = JsonTaskParse.class.getClassLoader().getResourceAsStream("data/tasks.json");
+       try(InputStream inputStream = JsonTaskParse.class.getClassLoader().getResourceAsStream("src/main/java/data/tasks.json");
 
        ){
            TaskService taskService = TaskService.getInstance();
@@ -27,7 +27,7 @@ public class JsonTaskParse {
     public void write(){
         ObjectMapper mapper = new ObjectMapper();
         TaskService taskService = TaskService.getInstance();
-        try(FileWriter writer = new FileWriter("data/tasks.json")){
+        try(FileWriter writer = new FileWriter("src/main/java/data/tasks.json")){
             mapper.writeValue(writer, taskService.getTasks());
         }
         catch (Exception e){

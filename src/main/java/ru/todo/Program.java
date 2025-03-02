@@ -17,6 +17,7 @@ import static ru.todo.service.menu.LoginMenu.loginMenu;
 
 public class Program {
     public static void main(String[] args) throws JAXBException, FileNotFoundException {
+        System.out.println("Current working directory: " + System.getProperty("user.dir"));
         UserService userService = UserService.getInstance();
         TaskService taskService = TaskService.getInstance();
         XmlTaskParse xmlTaskParse = new XmlTaskParse();

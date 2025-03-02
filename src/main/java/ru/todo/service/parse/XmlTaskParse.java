@@ -8,7 +8,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class XmlTaskParse {
-    private static final String USERTASKLIST_XML = "data/tasks.xml";
+    private static final String USERTASKLIST_XML = "src/main/java/data/tasks.xml";
 
     public void read() throws JAXBException, FileNotFoundException {
         TaskService taskService = TaskService.getInstance();
