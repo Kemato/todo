@@ -105,7 +105,7 @@ public class Task {
     public void setPriority(String priority) {
         this.priority = priority;
     }
-    public void setDateCreated(Date dateCreated) {}
+    public void setDateCreated(Date dateCreated) {this.dateCreated = dateCreated;}
     public void setDeadline(Date deadline) {
         this.deadLine = deadline;
     }

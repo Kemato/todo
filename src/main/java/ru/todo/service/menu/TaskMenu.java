@@ -70,7 +70,7 @@ public class TaskMenu {
                             }
                             System.out.println(
                                     "Введите id(1-" +
-                                            tasks.size() +
+                                            taskService.getTasks().size() +
                                             ")задания, если хотите вывести весь список, введите '-'."
                             );
                             String input = sc.nextLine();
@@ -79,9 +79,8 @@ public class TaskMenu {
                                 for (Task task : tasks) {
                                     printTask(task);
                                 }
-                            } else {
-                                printTask(taskService.readTask(Integer.parseInt(input)));
-
+                            } else if(Integer.parseInt(input) > 0 && Integer.parseInt(input) < taskService.getTasks().size()-1) {
+                                printTask(taskService.readTask(Integer.parseInt(input) - 1));
                             }
                             System.out.println("Введите любой символ чтобы продолжить...");
                             sc.nextLine();
@@ -145,6 +144,9 @@ public class TaskMenu {
         System.out.println("Assigned: " + task.getAssigned());
         System.out.println("Status: " + task.getStatus());
         System.out.println("Priority: " + task.getPriority());
-        System.out.println();
+        System.out.println("Date Created: " + task.getDateCreated());
+        System.out.println("Date Updated: " + task.getDateUpdated());
+        System.out.println("Deadline: " + task.getDeadline());
+        System.out.println("DeadFinshed:" + task.getDateFinished());
     }
 }
