@@ -94,4 +94,18 @@ public class UserService {
     public ArrayList<User> getUserList() {
         return this.userList;
     }
+
+    public Long getIdByUsername(String username) {
+        for (User user : this.userList) {
+            if (user.getName().equals(username)) {return user.getId();}
+        }
+        return null;
+    }
+
+    public User getUser(long id) {
+        for (User user : this.userList) {
+            if (user.getId() == id) {return user;}
+        }
+        return null;
+    }
 }

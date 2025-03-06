@@ -18,7 +18,10 @@ public class JsonTaskParse {
         try (FileReader reader = new FileReader(USERTASKLIST_JSON)) {
             TaskService taskService = TaskService.getInstance();
             ObjectMapper mapper = new ObjectMapper();
-            ArrayList<Task> tasks = mapper.readValue(reader, mapper.getTypeFactory().constructCollectionType(ArrayList.class, Task.class));
+            ArrayList<Task> tasks = mapper.readValue(
+                    reader,
+                    mapper.getTypeFactory().constructCollectionType(ArrayList.class, Task.class)
+            );
             taskService.setTasks(tasks);
         } catch (Exception e) {
             System.out.println("Read task_list_json Error " + e.getMessage());

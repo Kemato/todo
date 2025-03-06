@@ -19,7 +19,7 @@ public class JsonUserParse {
             UserService.getInstance().setUserList(
                     mapper.readValue(reader, mapper.getTypeFactory().constructCollectionType(ArrayList.class, User.class)));
         } catch (Exception e) {
-            System.out.println("Parsing read error " + e.getMessage());
+            System.out.println("Parsing user_list_json error " + e.getMessage());
         }
     }
 
